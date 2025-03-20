@@ -5,13 +5,13 @@ const initialGameState = {
 };
 
 export class Game {
-  _gameState: GameState = initialGameState;
+  #gameState: GameState = initialGameState;
 
-  updateGameState(): GameState {
-    return this._gameState;
+  fetchGameState(): GameState {
+    return this.#gameState;
   }
 
   startGame() {
-    this._gameState.started = true;
+    this.#gameState.started = true;
   }
 }

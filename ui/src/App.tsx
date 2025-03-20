@@ -1,19 +1,14 @@
-import { io } from "socket.io-client";
-import { GameState } from "../../common/types";
 import "./App.css";
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const socket = io("ws://localhost:8080", {
-  reconnectionDelayMax: 10000,
-});
+import { useGameContext } from "./module/useGameContext";
 
 function App() {
-  socket.on("gameState:update", (gameState: GameState) => {
-    console.log(gameState);
-  });
+  const { socket } = useGameContext();
+  const startGame = () => socket.emit("game:start");
+
   return (
     <>
       <h1>Black Jack</h1>
+      <button onClick={startGame}>Start</button>
     </>
   );
 }

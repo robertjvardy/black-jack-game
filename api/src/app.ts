@@ -23,11 +23,11 @@ const createApplication = ({
   io.on("connection", (socket) => {
     console.log("User Connected. Socket id: ", socket.id);
 
-    const { startGame } = createGameHandlers(game);
+    const { startGame } = createGameHandlers(game, socket);
 
     socket.on("game:start", startGame);
 
-    socket.emit("gameState:update", game.updateGameState());
+    socket.emit("gameState:update", game.fetchGameState());
   });
 
   return io;
