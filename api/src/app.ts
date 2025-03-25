@@ -1,11 +1,11 @@
 import { Server as HttpServer } from "http";
 import { Server, ServerOptions } from "socket.io";
-import { ClientEvents, ServerEvents } from "../../common/events";
 import { Game } from "./game/game";
 import { CrudRepository } from "./repositories/types";
-import { IdType } from "../../common/types";
 import { Repositories } from "./types";
 import createGameHandlers from "./handlers/game.handlers";
+import { ClientEvents, ServerEvents } from "common";
+import { PlayerIdType } from "common/dtos";
 
 const createApplication = ({
   httpServer,
@@ -16,7 +16,7 @@ const createApplication = ({
   httpServer: HttpServer;
   serverOptions: Partial<ServerOptions>;
   game: Game;
-  repositories: CrudRepository<Repositories, IdType>[];
+  repositories: CrudRepository<Repositories, PlayerIdType>[];
 }): Server<ClientEvents, ServerEvents> => {
   const io = new Server<ClientEvents, ServerEvents>(httpServer, serverOptions);
 

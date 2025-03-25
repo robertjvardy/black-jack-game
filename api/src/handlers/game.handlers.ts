@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { Game } from "../game/game";
-import { ClientEvents, ServerEvents } from "../../../common/events";
 import logger from "../services/logger";
+import { ClientEvents, ServerEvents } from "common";
 
 const gameLogger = logger.child({ module: "GAME" });
 

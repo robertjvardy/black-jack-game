@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      common:
+        specifier: file:../common
+        version: file:../common
       pino:
         specifier: ^9.6.0
         version: 9.6.0
@@ -197,6 +200,9 @@ packages:
   base64id@2.0.0:
     resolution: {integrity: sha512-lGe34o6EHj9y3Kts9R4ZYs/Gr+6N7MCaMlIFA3F1R2O5/m7K06AxfSeO5530PEERE6/WyEg3lsuyw4GHlPZHog==}
     engines: {node: ^4.5.0 || >= 5.9}
+
+  common@file:../common:
+    resolution: {directory: ../common, type: directory}
 
   cookie@0.7.2:
     resolution: {integrity: sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==}
@@ -438,6 +444,8 @@ snapshots:
   atomic-sleep@1.0.0: {}
 
   base64id@2.0.0: {}
+
+  common@file:../common: {}
 
   cookie@0.7.2: {}
 

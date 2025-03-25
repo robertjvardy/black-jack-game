@@ -1,4 +1,4 @@
-import { GameState } from "../../../common/types";
+import { GameState } from "common/dtos";
 import { ReactNode, useState } from "react";
 import socketClient from "./socketClient";
 import { defaultGameState, GameContext } from "./useGameContext";

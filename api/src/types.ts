@@ -1,3 +1,3 @@
-import { User } from "../../common/types";
+import { Player } from "common/dtos";
 
-export type Repositories = User;
+export type Repositories = Player;

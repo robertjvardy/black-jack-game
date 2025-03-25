@@ -1,7 +1,8 @@
-import { GameState } from "../../../common/types";
+import { GameState } from "common/dtos";
 
 const initialGameState = {
   started: false,
+  players: [],
 };
 
 export class Game {

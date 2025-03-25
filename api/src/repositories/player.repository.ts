@@ -1,17 +1,21 @@
 import { CrudRepository } from "./types";
-import { IdType, User } from "../../../common/types";
 import { Errors } from "../errors";
+import { PlayerEntity } from "../entities/player";
+import { PlayerIdType } from "common/dtos";
 
-export abstract class UserRepository extends CrudRepository<User, IdType> {}
+export abstract class UserRepository extends CrudRepository<
+  PlayerEntity,
+  PlayerIdType
+> {}
 
 export class InMemoryUserRepository extends UserRepository {
-  private readonly users: Map<IdType, User> = new Map();
-  findAll(): Promise<User[]> {
+  private readonly users: Map<PlayerIdType, PlayerEntity> = new Map();
+  findAll(): Promise<PlayerEntity[]> {
     const entities = Array.from(this.users.values());
     return Promise.resolve(entities);
   }
 
-  findById(id: IdType): Promise<User> {
+  findById(id: PlayerIdType): Promise<PlayerEntity> {
     if (this.users.has(id)) {
       return Promise.resolve(this.users.get(id)!);
     } else {
@@ -19,12 +23,12 @@ export class InMemoryUserRepository extends UserRepository {
     }
   }
 
-  save(entity: User): Promise<void> {
+  save(entity: PlayerEntity): Promise<void> {
     this.users.set(entity.id, entity);
     return Promise.resolve();
   }
 
-  deleteById(id: IdType): Promise<void> {
+  deleteById(id: PlayerIdType): Promise<void> {
     const deleted = this.users.delete(id);
     if (deleted) {
       return Promise.resolve();
