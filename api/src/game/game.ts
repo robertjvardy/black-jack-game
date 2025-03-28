@@ -3,6 +3,7 @@ import { GameState } from "common/dtos";
 const initialGameState = {
   started: false,
   players: [],
+  roundInProgress: false,
 };
 
 export class Game {
@@ -14,5 +15,9 @@ export class Game {
 
   startGame() {
     this.#gameState.started = true;
+  }
+
+  restartGame() {
+    this.#gameState = initialGameState;
   }
 }

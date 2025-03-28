@@ -1,13 +1,9 @@
 import { createContext, useContext } from "react";
-import { Socket } from "socket.io-client";
-import { GameState } from "common/dtos";
-import { ServerEvents } from "common";
-import socketClient from "./socketClient";
+import { GameState, Player } from "common/dtos";
 
 export type GameContextType = {
-  socket: Socket;
   gameState: GameState;
-  actions: Record<string, ServerEvents>;
+  players: Player[];
 };
 
 export const defaultGameState = {
@@ -16,9 +12,8 @@ export const defaultGameState = {
 };
 
 export const GameContext = createContext<GameContextType>({
-  socket: socketClient,
   gameState: defaultGameState,
-  actions: {},
+  players: [],
 });
 
 export const useGameContext = () => {

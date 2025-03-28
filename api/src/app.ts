@@ -1,11 +1,14 @@
 import { Server as HttpServer } from "http";
 import { Server, ServerOptions } from "socket.io";
 import { Game } from "./game/game";
-import { CrudRepository } from "./repositories/types";
-import { Repositories } from "./types";
 import createGameHandlers from "./handlers/game.handlers";
 import { ClientEvents, ServerEvents } from "common";
-import { PlayerIdType } from "common/dtos";
+import { PlayerRepository } from "./repositories/player.repository";
+import createPlayerHandlers from "./handlers/player.handlers";
+
+export interface Repositories {
+  playerRepository: PlayerRepository;
+}
 
 const createApplication = ({
   httpServer,
@@ -16,18 +19,25 @@ const createApplication = ({
   httpServer: HttpServer;
   serverOptions: Partial<ServerOptions>;
   game: Game;
-  repositories: CrudRepository<Repositories, PlayerIdType>[];
+  repositories: Repositories;
 }): Server<ClientEvents, ServerEvents> => {
   const io = new Server<ClientEvents, ServerEvents>(httpServer, serverOptions);
 
-  io.on("connection", (socket) => {
+  io.on("connection", async (socket) => {
     console.log("User Connected. Socket id: ", socket.id);
 
-    const { startGame } = createGameHandlers(game, socket);
+    const { startGame } = createGameHandlers(game, socket, repositories);
+    const { fetchPlayers, addPlayer } = createPlayerHandlers(
+      game,
+      socket,
+      repositories
+    );
 
     socket.on("game:start", startGame);
+    socket.on("player:add", addPlayer);
 
     socket.emit("gameState:update", game.fetchGameState());
+    socket.emit("player:update", await fetchPlayers());
   });
 
   return io;

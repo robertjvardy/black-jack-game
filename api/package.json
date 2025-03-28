@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsx ./src/index.ts | pino-pretty --singleLine",
+    "start": "tsx watch ./src/index.ts | pino-pretty --singleLine",
     "build": "tsc",
     "preview": "DEBUG=* node ./dist/api/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +20,7 @@
     "common": "file:../common",
     "pino": "^9.6.0",
     "socket.io": "^4.8.1",
+    "uuid": "^11.1.0",
     "zod": "^3.24.2"
   },
   "packageManager": "pnpm@10.6.4+sha512.da3d715bfd22a9a105e6e8088cfc7826699332ded60c423b14ec613a185f1602206702ff0fe4c438cb15c979081ce4cb02568e364b15174503a63c7a8e2a5f6c"
