@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import { useGameContext } from "../../module/useGameContext";
+import { startGameEvent } from "../../events/game.events";
 
 const StartGame = ({ handleStartGame }: { handleStartGame: () => void }) => {
   return (
@@ -22,13 +23,12 @@ const Navigation = () => {
 };
 
 const Landing = () => {
-  const { gameState, socket } = useGameContext();
+  const { gameState } = useGameContext();
   const { started } = gameState;
-  const handleStartGame = () => socket.emit("game:start");
   return (
     <div>
       <h1>Welcome to Black Jack</h1>
-      {!started && <StartGame handleStartGame={handleStartGame} />}
+      {!started && <StartGame handleStartGame={startGameEvent} />}
       {started && <Navigation />}
     </div>
   );

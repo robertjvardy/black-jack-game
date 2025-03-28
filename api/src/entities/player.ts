@@ -5,5 +5,4 @@ export interface PlayerEntity {
   status: PlayerStatusType;
   holdings: number;
   seatIndex: SeatIndexType;
-  // hands:
 }
