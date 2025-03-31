@@ -23,15 +23,21 @@ const createApplication = ({
 }): Server<ClientEvents, ServerEvents> => {
   const io = new Server<ClientEvents, ServerEvents>(httpServer, serverOptions);
 
-  io.on("connection", (socket) => {
+  io.on("connection", async (socket) => {
     console.log("User Connected. Socket id: ", socket.id);
 
     const { startGame } = createGameHandlers(game, socket, repositories);
-    const { addPlayer } = createPlayerHandlers(game, socket, repositories);
+    const { fetchPlayers, addPlayer } = createPlayerHandlers(
+      game,
+      socket,
+      repositories
+    );
 
     socket.on("game:start", startGame);
+    socket.on("player:add", addPlayer);
 
     socket.emit("gameState:update", game.fetchGameState());
+    socket.emit("player:update", await fetchPlayers());
   });
 
   return io;

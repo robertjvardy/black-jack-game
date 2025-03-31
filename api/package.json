@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsx ./src/index.ts | pino-pretty --singleLine",
+    "start": "tsx watch ./src/index.ts | pino-pretty --singleLine",
     "build": "tsc",
     "preview": "DEBUG=* node ./dist/api/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"

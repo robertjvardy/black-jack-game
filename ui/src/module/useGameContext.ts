@@ -1,8 +1,9 @@
 import { createContext, useContext } from "react";
-import { GameState } from "common/dtos";
+import { GameState, Player } from "common/dtos";
 
 export type GameContextType = {
   gameState: GameState;
+  players: Player[];
 };
 
 export const defaultGameState = {
@@ -12,6 +13,7 @@ export const defaultGameState = {
 
 export const GameContext = createContext<GameContextType>({
   gameState: defaultGameState,
+  players: [],
 });
 
 export const useGameContext = () => {

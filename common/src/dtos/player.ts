@@ -1,4 +1,4 @@
-import { PLAYER_STATUSES, SEAT_INDICES } from "../constants";
+import { PLAYER_STATUSES } from "../constants";
 
 export type PlayerIdType = string;
 
