@@ -2,12 +2,12 @@ import { useNavigate } from "react-router";
 import { useGameContext } from "../../module/useGameContext";
 import { startGameEvent } from "../../events/game.events";
 import { resetLocalStorage } from "../../module/localStorageUtils";
+import styles from "./styles.module.css";
 
 const StartGame = ({ handleStartGame }: { handleStartGame: () => void }) => {
   return (
-    <div>
-      <h3>Start Game</h3>
-      <button onClick={handleStartGame}>Start</button>
+    <div className={styles.start}>
+      <button onClick={handleStartGame}>Start Game</button>
     </div>
   );
 };
@@ -15,10 +15,13 @@ const StartGame = ({ handleStartGame }: { handleStartGame: () => void }) => {
 const Navigation = () => {
   const navigate = useNavigate();
   return (
-    <div>
-      <h3>Start Game</h3>
-      <button onClick={() => navigate("table")}>View Table</button>
-      <button onClick={() => navigate("join")}>Join Game</button>
+    <div className={styles.navigation}>
+      <button className={styles["table-btn"]} onClick={() => navigate("table")}>
+        View Table
+      </button>
+      <button className={styles["join-btn"]} onClick={() => navigate("join")}>
+        Join Game
+      </button>
     </div>
   );
 };

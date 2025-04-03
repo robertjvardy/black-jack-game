@@ -1,0 +1,21 @@
+.start {
+  margin-top: 2rem;
+
+  button {
+    background-color: greenyellow;
+    color: black;
+  }
+}
+
+.navigation {
+  margin-top: 2rem;
+  .table-btn {
+    background-color: purple;
+    color: black;
+  }
+  .join-btn {
+    margin-left: 1.5rem;
+    background-color: greenyellow;
+    color: black;
+  }
+}
