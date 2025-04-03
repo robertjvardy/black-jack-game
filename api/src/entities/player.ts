@@ -12,9 +12,10 @@ export const createNewPlayer = (
   playerId: PlayerIdType,
   seatIndex: SeatIndexType
 ): PlayerEntity => {
+  const startingHoldings = parseInt(process.env.STARTING_HOLDINGS!);
   return {
     id: playerId,
-    holdings: 500, // TODO make this configurable
+    holdings: startingHoldings,
     seatIndex,
     status: PLAYER_STATUSES.waiting,
   };

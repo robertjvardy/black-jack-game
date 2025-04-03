@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { SeatIndexType, Player } from "common/dtos";
 import { createNewPlayer } from "../entities/player";
 
-const gameLogger = logger.child({ module: "GAME" });
+const gameLogger = logger.child({ module: "PLAYER" });
 
 const createPlayerHandlers = (
   game: Game,

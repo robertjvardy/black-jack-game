@@ -2,6 +2,9 @@ import { createServer } from "http";
 import createApplication from "./app";
 import { Game } from "./game/game";
 import { InMemoryPlayerRepository } from "./repositories/player.repository";
+import logger from "./services/logger";
+
+const appLogger = logger.child({ module: "APPLICATION" });
 
 const PORT = process.env.PORT || 8080;
 const HOST = process.env.HOST || "0.0.0.0";
@@ -16,5 +19,6 @@ createApplication({
 });
 
 httpServer.listen({ port: PORT, hostname: HOST }, () => {
-  console.log(`Listening on port: ${PORT}`);
+  appLogger.info(`Listening on port: ${PORT}`);
+  appLogger.info(`STARTING_HOLDINGS: ${process.env.STARTING_HOLDINGS}`);
 });
