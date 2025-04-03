@@ -8,7 +8,7 @@ export type GameContextType = {
 
 export const defaultGameState = {
   started: false,
-  players: [],
+  roundInProgress: false,
 };
 
 export const GameContext = createContext<GameContextType>({

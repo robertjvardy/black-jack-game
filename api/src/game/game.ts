@@ -2,7 +2,6 @@ import { GameState } from "common/dtos";
 
 const initialGameState = {
   started: false,
-  players: [],
   roundInProgress: false,
 };
 

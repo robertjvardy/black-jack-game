@@ -1,4 +1,4 @@
-import { Player } from "./dtos";
+import { Player, SeatIndexType } from "./dtos";
 import { GameState } from "./dtos/gameState";
 
 interface Success<T> {
@@ -9,7 +9,10 @@ export type Response<T> = Error | Success<T>;
 
 export interface ClientEvents {
   "game:start": () => void;
-  "player:add": () => void;
+  "player:assign": (
+    seatIndex: SeatIndexType,
+    callBack: (player: Player) => void
+  ) => void;
 }
 
 export interface ServerEvents {

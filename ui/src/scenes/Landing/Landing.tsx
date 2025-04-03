@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { useGameContext } from "../../module/useGameContext";
 import { startGameEvent } from "../../events/game.events";
+import { resetLocalStorage } from "../../module/localStorageUtils";
 
 const StartGame = ({ handleStartGame }: { handleStartGame: () => void }) => {
   return (
@@ -25,10 +26,14 @@ const Navigation = () => {
 const Landing = () => {
   const { gameState } = useGameContext();
   const { started } = gameState;
+  const handleStartGame = () => {
+    startGameEvent();
+    resetLocalStorage();
+  };
   return (
     <div>
       <h1>Welcome to Black Jack</h1>
-      {!started && <StartGame handleStartGame={startGameEvent} />}
+      {!started && <StartGame handleStartGame={handleStartGame} />}
       {started && <Navigation />}
     </div>
   );

@@ -2,20 +2,38 @@ import classNames from "classnames";
 import styles from "./styles.module.css";
 import { useEffect } from "react";
 import { useGameContext } from "../../module/useGameContext";
-import { SeatIndexType } from "common/dtos";
+import { Player, SeatIndexType } from "common/dtos";
 import { SEAT_INDEXES } from "common";
 import { assignPlayer } from "../../events/player.events";
-import { fetchSeatIndex, fetchSeatKey } from "../../module/localStorageUtils";
+import {
+  fetchSeatIndex,
+  fetchSeatKey,
+  storeSeatIndex,
+  storeSeatKey,
+} from "../../module/localStorageUtils";
 import { useNavigate } from "react-router";
 
-const Seat = ({ index, present }: { index: number; present: boolean }) => {
+const Seat = ({
+  index,
+  present,
+}: {
+  index: SeatIndexType;
+  present: boolean;
+}) => {
+  const navigate = useNavigate();
   return (
     <button
       disabled={present}
       className={classNames(styles.seat, { [styles.disabled]: present })}
-      onClick={assignPlayer}
+      onClick={() =>
+        assignPlayer(index, (player: Player) => {
+          storeSeatKey(player.id);
+          storeSeatIndex(player.seatIndex as SeatIndexType);
+          navigate("/playerControls");
+        })
+      }
     >
-      {index + 1}
+      {(index as number) + 1}
     </button>
   );
 };
@@ -28,7 +46,6 @@ const SeatAssignment = () => {
   useEffect(() => {
     const seatKey = fetchSeatKey();
     const seatIndex = fetchSeatIndex();
-    console.log(seatKey, seatIndex);
     if (seatKey && seatIndex) {
       navigate("/playerControls");
     }
@@ -41,7 +58,7 @@ const SeatAssignment = () => {
         {SEAT_INDEXES.map((index) => {
           return (
             <Seat
-              index={index}
+              index={index as SeatIndexType}
               present={takenSeatIndexes.includes(index as SeatIndexType)}
               key={index}
             />

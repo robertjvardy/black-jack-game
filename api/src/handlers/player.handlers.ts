@@ -1,25 +1,13 @@
 import { Socket } from "socket.io";
 import { Game } from "../game/game";
 import logger from "../services/logger";
-import { ClientEvents, PLAYER_STATUSES, ServerEvents } from "common";
+import { ClientEvents, ServerEvents } from "common";
 import { Repositories } from "../app";
 import { v4 as uuidv4 } from "uuid";
-import { PlayerIdType, SeatIndexType, Player } from "common/dtos";
-import { PlayerEntity } from "../entities/player";
+import { SeatIndexType, Player } from "common/dtos";
+import { createNewPlayer } from "../entities/player";
 
 const gameLogger = logger.child({ module: "GAME" });
-
-const createNewPlayer = (
-  playerId: PlayerIdType,
-  seatIndex: SeatIndexType
-): PlayerEntity => {
-  return {
-    id: playerId,
-    holdings: 500, // TODO make this configurable
-    seatIndex,
-    status: PLAYER_STATUSES.waiting,
-  };
-};
 
 const createPlayerHandlers = (
   game: Game,
@@ -32,12 +20,19 @@ const createPlayerHandlers = (
       const players = await playerRepository.findAll();
       return players;
     },
-    addPlayer: async (seatIndex: SeatIndexType, callBack: () => Player[]) => {
+    assignPlayer: async (
+      seatIndex: SeatIndexType,
+      callBack: (players: Player) => void
+    ) => {
       const playerId = uuidv4();
-      gameLogger.info(`Adding Player: ${playerId}`);
+      gameLogger.info(
+        `Assigning Player: "${playerId}" to seat index: ${seatIndex}`
+      );
       const player = createNewPlayer(playerId, seatIndex);
       await playerRepository.save(player);
-      callBack();
+      const players = await playerRepository.findAll();
+      socket.emit("player:update", players);
+      callBack(player);
     },
   };
 };

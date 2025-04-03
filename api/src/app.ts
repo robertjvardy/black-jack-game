@@ -27,14 +27,14 @@ const createApplication = ({
     console.log("User Connected. Socket id: ", socket.id);
 
     const { startGame } = createGameHandlers(game, socket, repositories);
-    const { fetchPlayers, addPlayer } = createPlayerHandlers(
+    const { fetchPlayers, assignPlayer } = createPlayerHandlers(
       game,
       socket,
       repositories
     );
 
     socket.on("game:start", startGame);
-    socket.on("player:add", addPlayer);
+    socket.on("player:assign", assignPlayer);
 
     socket.emit("gameState:update", game.fetchGameState());
     socket.emit("player:update", await fetchPlayers());
