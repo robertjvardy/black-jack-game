@@ -3,7 +3,6 @@ import { Game } from "../game/game";
 import logger from "../services/logger";
 import { ClientEvents, ServerEvents } from "common";
 import { Repositories } from "../app";
-import { v4 as uuidv4 } from "uuid";
 import { SeatIndexType, Player } from "common/dtos";
 import { createNewPlayer } from "../entities/player";
 
@@ -24,14 +23,14 @@ const createPlayerHandlers = (
       seatIndex: SeatIndexType,
       callBack: (players: Player) => void
     ) => {
-      const playerId = uuidv4();
       gameLogger.info(
-        `Assigning Player: "${playerId}" to seat index: ${seatIndex}`
+        `Assigning Player: "${socket.id}" to seat index: ${seatIndex}`
       );
-      const player = createNewPlayer(playerId, seatIndex);
+      const player = createNewPlayer(socket.id, seatIndex);
       await playerRepository.save(player);
       const players = await playerRepository.findAll();
-      socket.emit("player:update", players);
+      socket.broadcast.emit("players:update", players);
+      socket.join(`player-room-${socket.id}`);
       callBack(player);
     },
   };

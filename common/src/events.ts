@@ -9,13 +9,17 @@ export type Response<T> = Error | Success<T>;
 
 export interface ClientEvents {
   "game:start": () => void;
-  "player:assign": (
+  "game:fetch-state": (callBack: (gameState: GameState) => void) => void;
+  "join-table-room": () => void;
+  "leave-table-room": () => void;
+  "players:assign": (
     seatIndex: SeatIndexType,
     callBack: (player: Player) => void
   ) => void;
+  "players:fetch": (callBack: (players: Player[]) => void) => void;
 }
 
 export interface ServerEvents {
   "gameState:update": (res: GameState) => void;
-  "player:update": (res: Player[]) => void;
+  "players:update": (res: Player[]) => void;
 }

@@ -4,4 +4,4 @@ import socketClient from "../module/socketClient";
 export const assignPlayer = (
   seatIndex: SeatIndexType,
   callback: (player: Player) => void
-) => socketClient.emit("player:assign", seatIndex, callback);
+) => socketClient.emit("players:assign", seatIndex, callback);

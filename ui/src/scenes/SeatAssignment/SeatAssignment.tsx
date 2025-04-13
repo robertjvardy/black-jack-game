@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import styles from "./styles.module.css";
-import { useEffect } from "react";
-import { useGameContext } from "../../module/useGameContext";
+import { useEffect, useState } from "react";
 import { Player, SeatIndexType } from "common/dtos";
 import { SEAT_INDEXES } from "common";
 import { assignPlayer } from "../../events/player.events";
@@ -12,6 +11,7 @@ import {
   storeSeatKey,
 } from "../../module/localStorageUtils";
 import { useNavigate } from "react-router";
+import socketClient from "../../module/socketClient";
 
 const Seat = ({
   index,
@@ -39,16 +39,27 @@ const Seat = ({
 };
 
 const SeatAssignment = () => {
+  const [players, setPlayers] = useState<Player[]>([]);
   const navigate = useNavigate();
-  const { players } = useGameContext();
   const takenSeatIndexes = players.map((player) => player.seatIndex);
 
   useEffect(() => {
+    socketClient.on("players:update", (players: Player[]) => {
+      setPlayers(players);
+    });
+
+    socketClient.emit("players:fetch", (p: Player[]) => {
+      setPlayers(p);
+    });
     const seatKey = fetchSeatKey();
     const seatIndex = fetchSeatIndex();
     if (seatKey && seatIndex) {
       navigate("/playerControls");
     }
+
+    return () => {
+      socketClient.off("players:update");
+    };
   }, [navigate]);
 
   return (

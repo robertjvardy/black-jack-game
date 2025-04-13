@@ -4,6 +4,8 @@ import logger from "../services/logger";
 import { ClientEvents, ServerEvents } from "common";
 import { Repositories } from "../app";
 import { createDealerPlayer } from "../entities/player";
+import { GameState } from "common/dtos";
+import { application } from "..";
 
 const gameLogger = logger.child({ module: "GAME" });
 
@@ -18,7 +20,11 @@ const createGameHandlers = (
       game.startGame();
       gameLogger.info("Game Started");
       await playerRepository.save(createDealerPlayer());
-      socket.emit("gameState:update", game.fetchGameState());
+      application.emit("gameState:update", game.fetchGameState());
+    },
+    fetchState: async (callBack: (state: GameState) => void) => {
+      const state = game.fetchGameState();
+      callBack(state);
     },
   };
 };

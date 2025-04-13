@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router";
 import { useGameContext } from "../../module/useGameContext";
 import { startGameEvent } from "../../events/game.events";
-import { resetLocalStorage } from "../../module/localStorageUtils";
 import styles from "./styles.module.css";
 
 const StartGame = ({ handleStartGame }: { handleStartGame: () => void }) => {
@@ -16,10 +15,13 @@ const Navigation = () => {
   const navigate = useNavigate();
   return (
     <div className={styles.navigation}>
-      <button className={styles["table-btn"]} onClick={() => navigate("table")}>
+      <button
+        className={styles["table-btn"]}
+        onClick={() => navigate("/table")}
+      >
         View Table
       </button>
-      <button className={styles["join-btn"]} onClick={() => navigate("join")}>
+      <button className={styles["join-btn"]} onClick={() => navigate("/join")}>
         Join Game
       </button>
     </div>
@@ -29,14 +31,10 @@ const Navigation = () => {
 const Landing = () => {
   const { gameState } = useGameContext();
   const { started } = gameState;
-  const handleStartGame = () => {
-    startGameEvent();
-    resetLocalStorage();
-  };
   return (
     <div>
       <h1>Welcome to Black Jack</h1>
-      {!started && <StartGame handleStartGame={handleStartGame} />}
+      {!started && <StartGame handleStartGame={startGameEvent} />}
       {started && <Navigation />}
     </div>
   );

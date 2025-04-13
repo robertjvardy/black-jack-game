@@ -11,7 +11,7 @@ const HOST = process.env.HOST || "0.0.0.0";
 
 const httpServer = createServer();
 
-createApplication({
+export const application = createApplication({
   httpServer,
   serverOptions: { cors: { origin: ["http://localhost:3000"] } },
   game: new Game(),
